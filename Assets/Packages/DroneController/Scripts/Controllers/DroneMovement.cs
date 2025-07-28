@@ -11,6 +11,8 @@ namespace DroneController
         [Header("Local References:")]
         [SerializeField] private Transform _droneObject = default;
 
+        public float speedMultiplier = 1f;  // �⺻�� 1 (���� �ӵ�)
+
         // Component renferences.
         private Rigidbody _rigidbody = default;
         private InputManager _inputManager = default;
@@ -106,7 +108,7 @@ namespace DroneController
         public void ThrottleForce(float throttleInput)
         {
             float forceValue = (throttleInput > 0) ? _droneMovementData.UpwardMovementForce : (throttleInput < 0) ? _droneMovementData.DownwardMovementForce : 0f;
-            _currentUpForce = _rigidbody.mass * 9.81f + throttleInput * forceValue;
+            _currentUpForce = (_rigidbody.mass * 9.81f + throttleInput * forceValue) * speedMultiplier;
         }
 
         /// <summary>
@@ -114,7 +116,7 @@ namespace DroneController
         /// </summary>
         public void RollForce(float rollInput)
         {
-            _rigidbody.AddRelativeForce(Vector3.right * rollInput * _droneMovementData.SidewardMovementForce);
+            _rigidbody.AddRelativeForce(Vector3.right * rollInput * _droneMovementData.SidewardMovementForce * speedMultiplier);
             _currentRollAmount = Mathf.SmoothDamp(_currentRollAmount, _droneMovementData.MaximumRollAmount * rollInput, ref _currentRollAmountVelocity, _droneMovementData.PitchRollTiltSpeed);
         }
 
@@ -132,7 +134,7 @@ namespace DroneController
         /// </summary>
         public void PitchForce(float pitchInput)
         {
-            _rigidbody.AddRelativeForce(Vector3.forward * pitchInput * _droneMovementData.ForwardMovementForce);
+            _rigidbody.AddRelativeForce(Vector3.forward * pitchInput * _droneMovementData.ForwardMovementForce * speedMultiplier);
             _currentPitchAmount = Mathf.SmoothDamp(_currentPitchAmount, _droneMovementData.MaximumPitchAmount * pitchInput, ref _currentPitchAmountVelocity, _droneMovementData.PitchRollTiltSpeed);
         }
     }
