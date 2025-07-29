@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SlowZone : MonoBehaviour
+public class InterferenceZone : MonoBehaviour
 {
     public float slowMultiplier = 0.5f;
 
@@ -8,7 +8,7 @@ public class SlowZone : MonoBehaviour
     {
         if (other.CompareTag("Drone"))
         {
-            Debug.Log("드론이 Interference Zone에 진입했습니다!");
+            Debug.Log("드론이 Interference Zone에 진입");
             var droneMovement = other.GetComponent<DroneController.DroneMovement>();
             if (droneMovement != null)
             {
@@ -21,7 +21,7 @@ public class SlowZone : MonoBehaviour
     {
         if (other.CompareTag("Drone"))
         {
-            Debug.Log("드론이 Interference Zone을 벗어났습니다!");
+            Debug.Log("드론이 Interference Zone을 벗어남");
             var droneMovement = other.GetComponent<DroneController.DroneMovement>();
             if (droneMovement != null)
             {
